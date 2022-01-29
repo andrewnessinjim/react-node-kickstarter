@@ -17,5 +17,11 @@ async function setUpRoutes(app) {
         const health = {message: "I am OK! Thank you for asking!"}
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(health));
-    })
+    });
+
+    app.get("/helloreactmessage", (req, res) => {
+        const health = {message: "Edit src/App.tsx and save to reload."}
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify(health));
+    });
 }
