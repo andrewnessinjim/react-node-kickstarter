@@ -18,8 +18,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
+        <img src={logo} className="App-logo" alt="logo"/>
+        <p onClick={handleClick}>
           {message}
         </p>
         <a
@@ -33,6 +33,10 @@ function App() {
       </header>
     </div>
   );
+
+  function handleClick(){
+    console.log("Clicked!");
+  }
 }
 
 export default App;

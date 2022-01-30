@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Node Attach",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "address": "localhost",
+            "sourceMaps": true,
+            "localRoot": "${workspaceFolder}/server",
+            "remoteRoot": "/app/server",
+            "protocol": "inspector",
+            "restart": true
+        },
+        {
+            "type": "pwa-chrome",
+            "name": "Chrome Launch",
+            "request": "launch",
+            "url": "http://localhost:3001",
+            "userDataDir": "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir",
+            "localRoot": "./client/src",
+            "remoteRoot": "/app/client/src",
+            "webRoot": "/app/client/src",
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/*"
+            }
+        }
+    ]
+}

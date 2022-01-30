@@ -8,6 +8,7 @@ services:
     ports:
       - '3000:3000'
       - '3001:3001'
+      - '9229:9229'
     tty: true
     working_dir: /app
     command: bash /app/docker-entrypoint.sh
