@@ -13,7 +13,7 @@ function App() {
         setMessage(json.message);
     };
     fetchMessage();
-  });
+  }, []);
 
   return (
     <div className="App">
