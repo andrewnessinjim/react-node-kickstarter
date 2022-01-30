@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  local-kickstarter:
+    image: node:17
+    volumes:
+      - ./:/app
+    ports:
+      - '3000:3000'
+      - '3001:3001'
+    tty: true
+    working_dir: /app
+    command: bash /app/docker-entrypoint.sh
