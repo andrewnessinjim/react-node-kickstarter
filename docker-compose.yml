@@ -5,6 +5,9 @@ services:
     image: node:17
     volumes:
       - ./:/app
+    environment:
+        - DB_URI=mongodb://kickstarter-user:kickstarter-pass@local-mongo:27017
+        - DB_NAMESPACE=reactnodekickstarter
     ports:
       - '3000:3000'
       - '3001:3001'
@@ -12,3 +15,22 @@ services:
     tty: true
     working_dir: /app
     command: bash /app/docker-entrypoint.sh
+
+  local-mongo:
+    image: mongo:5.0.3
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: admin
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+    tty: true
+    volumes:
+      - local-kickstarter-data:/data/db
+      - ./mongodb:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  local-kickstarter-data:

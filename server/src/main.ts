@@ -1,10 +1,12 @@
-const express = require("express");
+import express from "express";
+import * as db from "./db";
 
 const PORT:number = parseInt(process.env.PORT) || 3000;
 
 boot();
 
 async function boot() {
+    await db.connect();
     const app = express();
     setUpRoutes(app);
     app.listen(PORT, function() {
@@ -19,8 +21,15 @@ async function setUpRoutes(app) {
         res.end(JSON.stringify(health));
     });
 
-    app.get("/helloreactmessage", (req, res) => {
-        const health = {message: "Edit src/App.tsx and save to reload."}
+    app.get("/helloreactmessage", async (req, res) => {
+        const homePageDoc = await db.get().collection("pages").findOne({
+            pageName: "homePage"
+        }, {
+            projection: {
+                reactMessage: 1
+            }
+        });
+        const health = {message: homePageDoc.reactMessage}
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(health));
     });
