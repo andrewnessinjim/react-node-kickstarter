@@ -24,6 +24,7 @@
     "rimraf": "^3.0.2"
   },
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mongodb": "^4.3.1"
   }
 }
