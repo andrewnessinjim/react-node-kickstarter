@@ -1,0 +1,32 @@
+version: '2.4'
+
+services:
+  kickstarter-web:
+    image: kickstarter:10
+    environment:
+        - DB_URI=mongodb://kickstarter-user:kickstarter-pass@mongo:27017
+        - DB_NAMESPACE=reactnodekickstarter
+    depends_on:
+      - mongo
+    ports:
+      - '3000:3000'
+    tty: true
+
+  cypress:
+    build: ./
+    environment:
+      - CYPRESS_baseUrl=http://kickstarter-web:3000
+    depends_on:
+      - kickstarter-web
+
+  mongo:
+    build:
+      context: ../mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: admin
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+    tty: true

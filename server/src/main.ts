@@ -1,5 +1,6 @@
 import express from "express";
 import * as db from "./db";
+import chalk from "chalk";
 
 const PORT:number = parseInt(process.env.PORT) || 3000;
 
@@ -33,4 +34,11 @@ async function setUpRoutes(app) {
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(health));
     });
+
+    if(process.env.NODE_ENV == "production") {
+        console.log(chalk.bgRed.white("Detected PRODUCTION env, serving static files from public directory."));
+        app.use(express.static("public"));
+    } else {
+        console.log(chalk.bgRed.white("Detected DEVELOPMENT env, not serving static files."));
+    }
 }
