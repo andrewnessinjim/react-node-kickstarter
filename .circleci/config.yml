@@ -1,0 +1,110 @@
+version: 2.1
+
+commands:
+  install-heroku:
+    steps:
+      - run:
+          name: "Install heroku (If not already installed)"
+          command: |
+                if [[ $(command -v heroku) == "" ]]; then
+                  curl https://cli-assets.heroku.com/install.sh | sh
+                else
+                  echo "Heroku is already installed. No operation was performed."
+                fi
+
+  build-image:
+    parameters:
+      tag:
+        type: string
+    steps:
+      - run:
+          name: "Build production docker image with tag name <<parameters.tag>>"
+          command: "docker build -t <<parameters.tag>> --target prod ."
+
+  run-unit-tests:
+    parameters:
+      tag:
+        type: string
+    steps:
+      - run:
+          name: "Run unit tests against <<parameters.tag>>"
+          command: "docker container run <<parameters.tag>> gulp test"
+
+  publish-to-heroku:
+    parameters:
+      heroku-app-name:
+        type: string
+    steps:
+      - run:
+          name: "Login to heroku"
+          command: "heroku container:login"
+      - run:
+          name: "Push image to heroku"
+          command: "docker push registry.heroku.com/<<parameters.heroku-app-name>>/web"
+      - run:
+          name: "Release the image"
+          command: "heroku container:release web --app <<parameters.heroku-app-name>>"
+
+jobs:
+  build-and-test-in-staging-and-release-to-production:
+    docker:
+      - image: cimg/base:2021.11
+    resource_class: small
+    steps:
+      - setup_remote_docker:
+          version: 20.10.11
+      - checkout
+      - build-image:
+          tag: registry.heroku.com/hello-world-e2e-staging/web
+      - run-unit-tests:
+          tag: registry.heroku.com/hello-world-e2e-staging/web
+      - install-heroku
+      - publish-to-heroku:
+          heroku-app-name: hello-world-e2e-staging
+      - run:
+          name: "Run e2e tests against heroku staging env"
+          command: "docker-compose -f ./e2e/docker-compose.ci-staging-test.yml up  --exit-code-from cypress"
+      - run:
+          name: "Tag docker image for heroku production env"
+          command: "docker tag registry.heroku.com/hello-world-e2e-staging/web registry.heroku.com/hello-world-e2e/web"
+      - publish-to-heroku:
+          heroku-app-name: hello-world-e2e
+
+  build-and-test-in-docker-compose:
+    docker:
+      - image: cimg/base:2021.11
+    resource_class: small
+    steps:
+      - setup_remote_docker:
+          version: 20.10.11
+          docker_layer_caching: true
+      - checkout
+      - build-image:
+          tag: kickstarter:<<pipeline.git.branch>>-<<pipeline.git.revision>>
+      # - run-unit-tests:
+      #     tag: kickstarter:<<pipeline.git.branch>>-<<pipeline.git.revision>>
+      - run:
+          name: "Run e2e tests in docker-compose env"
+          command: |
+            export APP_IMAGE=kickstarter:<<pipeline.git.branch>>-<<pipeline.git.revision>>
+            docker-compose -f ./e2e/docker-compose.ci-dev-test.yml build --parallel
+            docker-compose -f ./e2e/docker-compose.ci-dev-test.yml up --exit-code-from cypress
+      - run:
+          name: "Copy cypress videos to executor"
+          command: "docker container cp e2e_cypress_1:/e2e/cypress/videos ./"
+      - store_artifacts:
+          path: ./videos
+
+workflows:
+  dev-build:
+    jobs:
+      - build-and-test-in-docker-compose:
+          filters:
+            branches:
+              only: /develop/
+  prod-build:
+    jobs:
+      - build-and-test-in-staging-and-release-to-production:
+          filters:
+            branches:
+              only: /production/
