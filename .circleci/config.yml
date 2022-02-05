@@ -19,7 +19,7 @@ commands:
     steps:
       - run:
           name: "Build production docker image with tag name <<parameters.tag>>"
-          command: "docker build -t <<parameters.tag>> --target prod ."
+          command: "docker build -t <<parameters.tag>> ."
 
   run-unit-tests:
     parameters:
