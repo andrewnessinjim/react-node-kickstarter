@@ -28,7 +28,7 @@ commands:
     steps:
       - run:
           name: "Run unit tests against <<parameters.tag>>"
-          command: "docker container run <<parameters.tag>> gulp test"
+          command: "docker container run <<parameters.tag>> /bin/bash -c \"cd /app/client && npm test\""
 
   publish-to-heroku:
     parameters:
@@ -81,8 +81,8 @@ jobs:
       - checkout
       - build-image:
           tag: kickstarter:<<pipeline.git.branch>>-<<pipeline.git.revision>>
-      # - run-unit-tests:
-      #     tag: kickstarter:<<pipeline.git.branch>>-<<pipeline.git.revision>>
+      - run-unit-tests:
+          tag: kickstarter:<<pipeline.git.branch>>-<<pipeline.git.revision>>
       - run:
           name: "Run e2e tests in docker-compose env"
           command: |

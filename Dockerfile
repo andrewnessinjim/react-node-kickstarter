@@ -18,8 +18,6 @@ RUN npm run build
 
 RUN mkdir -p /app/server/ && mv ./build /app/server/public
 
-RUN rm -rf /app/client
-
 WORKDIR /app/server
 
 COPY ./server/package*.json ./
