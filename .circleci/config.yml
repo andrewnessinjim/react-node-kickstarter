@@ -28,7 +28,7 @@ commands:
     steps:
       - run:
           name: "Run unit tests against <<parameters.tag>>"
-          command: "docker container run <<parameters.tag>> /bin/bash -c \"cd /app/client && npm test\""
+          command: "docker container run -e CI=true <<parameters.tag>> /bin/bash -c \"cd /app/client && npm test\""
 
   publish-to-heroku:
     parameters:
