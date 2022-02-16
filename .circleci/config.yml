@@ -27,8 +27,11 @@ commands:
         type: string
     steps:
       - run:
-          name: "Run unit tests against <<parameters.tag>>"
+          name: "Run front-end unit tests against <<parameters.tag>>"
           command: "docker container run -e CI=true <<parameters.tag>> /bin/bash -c \"cd /app/client && npm test\""
+      - run:
+          name: "Run back-end unit tests against <<parameters.tag>>"
+          command: "docker container run -e CI=true <<parameters.tag>> /bin/bash -c \"cd /app/server && npm test\""
 
   publish-to-heroku:
     parameters:
