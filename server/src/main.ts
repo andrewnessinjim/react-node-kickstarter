@@ -1,6 +1,7 @@
 import express from "express";
 import * as db from "./db";
 import chalk from "chalk";
+import { health } from "./health";
 
 const PORT:number = parseInt(process.env.PORT) || 3000;
 
@@ -17,9 +18,9 @@ async function boot() {
 
 async function setUpRoutes(app) {
     app.get("/healthcheck", (req, res) => {
-        const health = {message: "I am OK! Thank you for asking!"}
+        const healthJson = health();
         res.setHeader("Content-Type", "application/json");
-        res.end(JSON.stringify(health));
+        res.end(JSON.stringify(healthJson));
     });
 
     app.get("/helloreactmessage", async (req, res) => {
