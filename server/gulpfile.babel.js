@@ -10,7 +10,10 @@ gulp.task("clean", done => {
 
 gulp.task("build", gulp.series(
         "clean",
-        buildServer
+        gulp.parallel(
+            buildServer,
+            copyStaticServerAssets
+        )
 ));
 
 gulp.task("dev", gulp.series(
@@ -23,7 +26,8 @@ gulp.task("dev", gulp.series(
 
 function buildServer() {
     return gulp.src([
-        "./src/**/*.ts"
+        "./src/**/*.ts",
+        "./src/**/*.js",
     ])
     .pipe($.changed("./build", {extension: ".js"}))
     .pipe($.sourcemaps.init())
@@ -32,10 +36,20 @@ function buildServer() {
     .pipe(gulp.dest("./build"));
 }
 
+function copyStaticServerAssets(){
+    return gulp.src("./src/schema.graphql")
+        .pipe(gulp.dest("./build"));
+}
+
 function watchServer() {
     return gulp.watch([
-        "./src/**/*.ts"
-    ], gulp.parallel(buildServer));
+        "./src/**/*.ts",
+        "./src/**/*.js",
+        "./src/schema.graphql"
+    ], gulp.parallel(
+        copyStaticServerAssets,
+        buildServer
+    ));
 }
 
 function runServer() {

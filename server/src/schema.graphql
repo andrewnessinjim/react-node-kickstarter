@@ -1,0 +1,19 @@
+type Query {
+    homePage: HomePage!
+}
+
+type HomePage {
+    heading: String!
+    toolSets: [ToolSet]!
+}
+
+type ToolSet {
+    heading: String!
+    tools: [Tool]!
+}
+
+type Tool {
+    logoKey: String!
+    toolTip: String!
+    logoHeightPx: Int
+}
