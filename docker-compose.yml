@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-  local-kickstarter:
+  local-ultimate-hello-world-cra:
     image: node:17
     volumes:
       - ./:/app
     environment:
-        - DB_URI=mongodb://kickstarter-user:kickstarter-pass@local-mongo:27017
-        - DB_NAMESPACE=reactnodekickstarter
+        - DB_URI=mongodb://ultimate-hello-world-cra-user:ultimate-hello-world-cra-pass@local-mongo:27017
+        - DB_NAMESPACE=ultimate-hello-world-cra
     ports:
       - '3000:3000'
       - '3001:3001'
@@ -29,8 +29,8 @@ services:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
     tty: true
     volumes:
-      - local-kickstarter-data:/data/db
+      - local-ultimate-hello-world-cra-data:/data/db
       - ./mongodb:/docker-entrypoint-initdb.d:ro
 
 volumes:
-  local-kickstarter-data:
+  local-ultimate-hello-world-cra-data:

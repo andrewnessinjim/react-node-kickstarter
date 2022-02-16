@@ -1,9 +1,9 @@
-let DB_NAMESPACE = "reactnodekickstarter";
+let DB_NAMESPACE = "ultimate-hello-world-cra";
 
 db.createUser(
     {
-        user: "kickstarter-user",
-        pwd: "kickstarter-pass",
+        user: "ultimate-hello-world-cra-user",
+        pwd: "ultimate-hello-world-cra-pass",
         roles: [
             {
                 role: "readWrite",
@@ -13,7 +13,7 @@ db.createUser(
     }
 )
 
-db.auth("kickstarter-user","kickstarter-pass");
+db.auth("ultimate-hello-world-cra-user","ultimate-hello-world-cra-pass");
 const appDB = db.getSiblingDB(DB_NAMESPACE);
 
 appDB.pages.insertOne({
@@ -24,9 +24,6 @@ appDB.pages.insertOne({
             heading: "Source code in",
             tools: [{
                     logoKey : "typescript",
-                    toolTip: ""
-                },{
-                    logoKey : "pug",
                     toolTip: ""
                 },{
                     logoKey : "sass",
@@ -58,13 +55,13 @@ appDB.pages.insertOne({
         },{
             heading: "Transformed by",
             tools: [{
-                    logoKey : "gulp",
+                    logoKey: "gulp",
                     toolTip: ""
-                },{
-                    logoKey : "webpack",
+                }, {
+                    logoKey: "createreactapp",
                     toolTip: ""
-                },{
-                    logoKey : "babel",
+                }, {
+                    logoKey: "babel",
                     toolTip: ""
                 }]
         },{

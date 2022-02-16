@@ -1,5 +1,4 @@
 import typescript from "./typescript.svg";
-import pug from "./pug.svg";
 import sass from "./sass.svg";
 import svg from "./svg.svg";
 import apollo from "./apollo.svg";
@@ -25,10 +24,11 @@ import npm from "./npm.svg";
 import git from "./git.svg";
 import github from "./github.svg";
 import vscode from "./vscode.svg";
+import createreactapp from "./createreactapp.svg";
 
 const images:any = {
     typescript: typescript,
-    pug: pug,
+    createreactapp: createreactapp,
     sass: sass,
     svg: svg,
     apollo: apollo,

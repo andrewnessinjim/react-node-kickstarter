@@ -19,7 +19,7 @@ query {
 }
 `
 
-const HomePage = () => {
+export const HomePage = () => {
   const {data} = useQuery(HOMEPAGE_QUERY);
 
   return (
@@ -39,7 +39,7 @@ const HomePage = () => {
       )}
       </main>)
 }
-const Heading = (props: { heading: string }) => {
+export const Heading = (props: { heading: string }) => {
   return <h1>{props.heading}</h1>
 }
 
@@ -66,5 +66,3 @@ const ToolSet = (props: {
       </section>
   );
 }
-
-export default HomePage;

@@ -1,7 +1,7 @@
 /// <reference types="Cypress"/>
 
-it('displays create-react-app\'s default text', () => {
+it('displays hello world', () => {
   cy.visit('/');
-  cy.get('.App-header p')
-      .should('contain', 'Edit src/App.tsx and save to reload.');
+  cy.get('h1')
+      .should('contain', 'Hello World!');
 });
