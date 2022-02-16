@@ -1,11 +1,11 @@
 version: '2.4'
 
 services:
-  kickstarter-web:
+  ultimate-hello-world-cra-web:
     image: ${APP_IMAGE}
     environment:
-        - DB_URI=mongodb://kickstarter-user:kickstarter-pass@mongo:27017
-        - DB_NAMESPACE=reactnodekickstarter
+        - DB_URI=mongodb://ultimate-hello-world-cra-user:ultimate-hello-world-cra-pass@mongo:27017
+        - DB_NAMESPACE=ultimate-hello-world-cra
     depends_on:
       - mongo
     ports:
@@ -15,9 +15,9 @@ services:
   cypress:
     build: ./
     environment:
-      - CYPRESS_baseUrl=http://kickstarter-web:3000
+      - CYPRESS_baseUrl=http://ultimate-hello-world-cra-web:3000
     depends_on:
-      - kickstarter-web
+      - ultimate-hello-world-cra-web
 
   mongo:
     build:
