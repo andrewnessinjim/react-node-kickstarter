@@ -5,7 +5,7 @@ services:
     image: ${APP_IMAGE}
     environment:
         - DB_URI=mongodb://ultimate-hello-world-cra-user:ultimate-hello-world-cra-pass@mongo:27017
-        - DB_NAMESPACE=ultimate-hello-world-cra
+        - DB_NAMESPACE=ultimateHelloWorldCra
     depends_on:
       - mongo
     ports:

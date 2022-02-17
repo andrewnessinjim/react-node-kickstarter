@@ -7,7 +7,7 @@ services:
       - ./:/app
     environment:
         - DB_URI=mongodb://ultimate-hello-world-cra-user:ultimate-hello-world-cra-pass@local-mongo:27017
-        - DB_NAMESPACE=ultimate-hello-world-cra
+        - DB_NAMESPACE=ultimateHelloWorldCra
     ports:
       - '3000:3000'
       - '3001:3001'

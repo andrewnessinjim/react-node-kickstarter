@@ -1,4 +1,4 @@
-let DB_NAMESPACE = "ultimate-hello-world-cra";
+let DB_NAMESPACE = "ultimateHelloWorldCra";
 
 db.createUser(
     {
