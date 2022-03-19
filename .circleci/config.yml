@@ -68,10 +68,8 @@ jobs:
           name: "Run e2e tests against heroku staging env"
           command: "docker-compose -f ./e2e/docker-compose.ci-staging-test.yml up --exit-code-from cypress"
       - run:
-          name: "Tag docker image for heroku production env"
-          command: "docker tag registry.heroku.com/ultimate-hello-world-cra-stage/web registry.heroku.com/ultimate-hello-world-cra/web"
-      - publish-to-heroku:
-          heroku-app-name: ultimate-hello-world-cra
+          name: "Promote app from staging to production"
+          command: heroku pipelines:promote --app ultimate-hello-world-cra-stage --to production
 
   build-and-test-in-docker-compose:
     docker:
