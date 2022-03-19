@@ -69,7 +69,7 @@ jobs:
           command: "docker-compose -f ./e2e/docker-compose.ci-staging-test.yml up --exit-code-from cypress"
       - run:
           name: "Promote app from staging to production"
-          command: heroku pipelines:promote --app ultimate-hello-world-cra-stage --to production
+          command: heroku pipelines:promote --app ultimate-hello-world-cra-stage
 
   build-and-test-in-docker-compose:
     docker:
