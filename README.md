@@ -1,6 +1,21 @@
 # Ultimate Hello World CRA
 
+This project is no longer deployed in Heroku because Heroku removed their free tier and this was just a throwaway project I mainly built to to understand how all the tools come together. Here's a snapshot that shows the steps involved in a successful CircleCI build:
+
+![CircleCI build output showing all steps are successful](docs/circleci-build-log.jpg?raw=true)
+
+Here's a diagram showing the workflow of the pipeline:
+
+![Diagrammatic represenstation of the pipeline's workflow](docs/pipeline-diagram.png?raw=true)
+
+We can still observe the localhost environment working by cloning the repo and running `docker compose up` in the project root folder. For a Windows machine, ensure the line endings in `docker-entrypoint.sh` is `LF` and not `CRLF` before running `docker compose up`. You should see the output at localhost:3001 like this:
+
+![Browser showing output at http://localhost:3000](docs/localhost-output.png?raw=true)
+
+## Background
 This project is very similar to [my previous hello world project][1]; the difference is, this project uses [create-react-app][2] instead of custom webpack and babel config for frontend build. Using custom config revealed serious problems when I used it in a real project. Since create react app already solves all those problems, I'm hoping to save time by not reinventing the wheel. You can view the app deployed [here][3]. The page shows the tools used in displaying this hello world:
+
+## Tools Used
 
 * User interface implemented in **ReactJS** and **Sass**
 * Server implemented with **Typescript** and executed in **NodeJS**
